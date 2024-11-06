@@ -1,0 +1,5 @@
+package net.developia.bean;
+
+public class SesacDTO {
+
+}

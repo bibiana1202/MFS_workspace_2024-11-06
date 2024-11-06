@@ -1,0 +1,16 @@
+package net.developia.spring01.di101;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.GenericXmlApplicationContext;
+
+public class TVUser {
+	public static void main(String[] args) {
+		ApplicationContext context = new GenericXmlApplicationContext("/xcispring01/src/main/java/net/developia/spring01/di101/beaninit.xml");
+		TV tv = new LgTV();
+		tv.powerOn();
+		tv.channelDown();
+		tv.channelDown();
+		tv.soundUp();
+		tv.powerOff();
+	}
+}
