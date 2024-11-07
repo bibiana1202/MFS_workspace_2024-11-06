@@ -12,7 +12,6 @@ public class SamsungTV implements TV {
 		this.speaker = speaker;
 	}
 	
-	
 	public SamsungTV() {}
 	// 스피커가 반드시 주입되어야 한다!
 	// 어노테이션으로 samsungtv 빈 생성 -> 생성자로 주입

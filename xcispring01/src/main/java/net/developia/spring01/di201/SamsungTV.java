@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 public class SamsungTV implements TV {
 
 	// injection 방법 1)생성자 2)setter 3)어노테이션
-	//setter 인젝션
-
+	
+	// setter 인젝션
 	@Autowired // 삼성 티비의 스피커 타입에 스피커를 주입
 	@Qualifier(value = "mspeaker") //명시적 지정 하기 !! 
 	private Speaker speaker; 
