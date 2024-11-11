@@ -15,7 +15,7 @@
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
 
-	<!-- 스프링 mvc : 클래스당 하나 매핑-->
+	<!-- bean name 스프링 mvc : 클래스당 하나 매핑-->
 	<beans:bean name = "/mvc" class="net.developia.controller.ClassicMVC" />
   
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
@@ -24,6 +24,7 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
+	<!-- annotaiton 컨트롤러 : 메소드 단위로 매핑 -->
 	<context:component-scan base-package="net.developia.controller" />
 	
 	

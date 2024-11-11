@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="BoardServiceTests" project="xcispring01" tests="3" started="3" failures="0" errors="0" ignored="0">
+  <testsuite name="net.developia.service.BoardServiceTests" time="0.212">
+    <testcase name="testExist" classname="net.developia.service.BoardServiceTests" time="0.0"/>
+    <testcase name="testGetList" classname="net.developia.service.BoardServiceTests" time="0.199"/>
+    <testcase name="testRegister" classname="net.developia.service.BoardServiceTests" time="0.013"/>
+  </testsuite>
+</testrun>

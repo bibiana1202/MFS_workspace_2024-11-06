@@ -3,6 +3,7 @@ package net.developia.spring01.di301;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+// 자바 어노테이션
 @Configuration // applicationcontext 가 설정 파일로 인식 = beaninit.xml
 public class BeanInit {
 

@@ -1,0 +1,33 @@
+package net.developia.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j;
+import net.developia.service.BoardService;
+
+@Controller
+@Log4j
+@RequestMapping("/board/*")
+@AllArgsConstructor
+public class BoardController {
+	private BoardService service;
+	
+	@GetMapping("/list")
+	public String list(Model model) {
+		try {
+			log.info("list.......");
+			model.addAttribute("list",service.getList());
+			return "list";
+		} catch (Exception e) {
+			// 유저에게 보여줄 메시지 리턴
+			// 이동 할 곳도 지정할수도
+			e.printStackTrace();
+			return null;
+			
+		}
+	}
+}
