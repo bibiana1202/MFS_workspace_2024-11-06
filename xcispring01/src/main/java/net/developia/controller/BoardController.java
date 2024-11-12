@@ -25,7 +25,7 @@ public class BoardController {
 		try {
 			log.info("list.......");
 			model.addAttribute("list",service.getList());
-			return "list";
+			return "/board/list";
 		} catch (Exception e) {
 			// 유저에게 보여줄 메시지 리턴
 			// 이동 할 곳도 지정할수도
@@ -38,20 +38,26 @@ public class BoardController {
 	@PostMapping("/register")
 	public String register(BoardVO board, RedirectAttributes rttr) {
 		try {
-			log.info("register: "+board);
+			log.info("register!!!!!!: "+board);
 			service.register(board);
-			rttr.addFlashAttribute("result",board.getBno());
-			return "redirect:/board/list";
+			rttr.addFlashAttribute("result",board.getBno()); // 값 유지 하기 위해서 RedirectAttributes -> 세션 사용
+			return "redirect:/board/list"; // 새로운 화면으로 ,url 재이동
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
 	
-	@GetMapping("/get")
+	@GetMapping("/register")
+	public void register() {
+		
+	}
+	
+	// 수정/삭제 가 가능한 화면으로 이동하는 것은 조회 페이지와 같습니다 ! 
+	@GetMapping({"/get","/modify"})
 	public void get(@RequestParam("bno") Long bno, Model model) {
 		try {
-			log.info("/get");
+			log.info("/get or modify");
 			model.addAttribute("board",service.get(bno));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -68,7 +74,6 @@ public class BoardController {
 			}
 			return "redirect:/board/list";
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
 		}

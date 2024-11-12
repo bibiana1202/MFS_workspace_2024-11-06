@@ -70,9 +70,9 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public List<BoardVO> getList() throws Exception {
-		log.info("getList......");
 		
 		try {
+			log.info("getList......");
 			return mapper.getList();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

@@ -12,6 +12,8 @@
 <P>  The time on the server is ${serverTime}. </P>
 <ol>
 	<li><a href="/mvc">spring mvc 1.0</a>
+	<li><a href="/board/list">board list</a>
 </ol>
+<img src="/resources/img/a.jpg"/>
 </body>
 </html>

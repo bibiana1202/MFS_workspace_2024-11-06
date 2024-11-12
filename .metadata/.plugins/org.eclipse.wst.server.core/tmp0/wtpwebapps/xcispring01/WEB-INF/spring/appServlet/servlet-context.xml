@@ -18,6 +18,7 @@
 	<!-- bean name 스프링 mvc : 클래스당 하나 매핑-->
 	<beans:bean name = "/mvc" class="net.developia.controller.ClassicMVC" />
   
+  	<!-- 뷰리졸버 -->
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
