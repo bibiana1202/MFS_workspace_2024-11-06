@@ -1,0 +1,23 @@
+package net.developia.aop;
+
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.springframework.stereotype.Component;
+
+import lombok.extern.log4j.Log4j;
+
+@Aspect
+@Log4j
+@Component
+public class LogAdvice {
+
+	// aop 할시 protected 이상이여야 함.
+	// spring aop 에 execution 표현식 : 메서드 기준으로 PointCut을 설정
+	@Before("execution(* net.devlopia.service.SampleService*.*(..))")
+	public void logBefore() {
+		log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		log.info("@@@@@@@@@before adviece@@@@@@@@@@@");
+		log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+
+	}
+}

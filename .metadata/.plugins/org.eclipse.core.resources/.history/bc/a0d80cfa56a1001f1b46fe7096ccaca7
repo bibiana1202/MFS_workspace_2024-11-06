@@ -1,0 +1,5 @@
+package net.developia.aop;
+
+public class LogAdvice {
+
+}
