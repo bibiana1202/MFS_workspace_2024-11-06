@@ -14,6 +14,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import lombok.extern.log4j.Log4j;
 import net.developia.domain.BoardVO;
+import net.developia.domain.Criteria;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -87,5 +88,17 @@ public class BoardMapperTests {
 //		int count = mapper.update(board);
 //		log.info("UPDATE COUNT " + count);
 		assertTrue(1 == mapper.update(board));
+	}
+	
+	// 페이징 처리
+	@Test
+	public void testPaging() {
+		Criteria cri = new Criteria();
+		// 10개씩 3페이지
+		cri.setPageNum(3);
+		cri.setAmount(10);
+		
+		List<BoardVO> list = mapper.getListWithPaging(cri);
+		list.forEach(board -> log.info(board.getBno()));
 	}
 }

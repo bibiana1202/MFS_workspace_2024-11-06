@@ -2,6 +2,7 @@ package net.developia.service;
 
 import org.springframework.stereotype.Service;
 
+// target
 @Service
 public class SampleServiceImpl implements SampleService{
 

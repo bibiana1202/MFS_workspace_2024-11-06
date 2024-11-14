@@ -33,15 +33,52 @@
                      </thead>
 	            	 <c:forEach items="${list}" var="board">
 		            	 <tr>
-		            	 	<td><c:out value="${board.bno}"/></td>
-		            	 	<td><a href='/board/get?bno=<c:out value="${board.bno}"/>'><c:out value="${board.title}"/></a></td>
-		            	 	<td><c:out value="${board.writer}"/></td>
-		            	 	<td><fmt:formatDate pattern="yyyy-MM-dd" value="${board.regdate}"/>
-		            	 	<td><fmt:formatDate pattern="yyyy-MM-dd" value="${board.updateDate}"/>
+		            	 	<td><c:out value="${board.bno}"/></td> <!-- 번호 -->
+		            	 	<td>
+		   						<a class='move' href ='<c:out value="${board.bno}"/>'>
+									<c:out value="${board.title}"/>
+								</a>
+		            	 	</td> <!-- 제목 -->
+		            	 	<td><c:out value="${board.writer}"/></td> <!-- 작성자 -->
+		            	 	<td><fmt:formatDate pattern="yyyy-MM-dd" value="${board.regdate}"/> <!-- 작성일 -->
+		            	 	<td><fmt:formatDate pattern="yyyy-MM-dd" value="${board.updateDate}"/> <!-- 수정일 -->
 		            	 </tr>
 	            	 </c:forEach>
                  </table><!-- table태그의 끝 -->
                  
+                 <!-- 실제 페이지 동작 form 태그 : 페이지 번호 전송용 form 추가 -->
+                 <!-- 
+                 	pageNum과 amount 파라미터가 추가로 전달되는 이유는 actionForm에 이미 이 값들이 hidden 필드로 포함되어 있기 때문입니다. 
+                 	코드에서 actionForm을 사용하여 게시물의 bno 값을 추가할 때, pageNum과 amount는 이미 actionForm 안에 있기 때문에 함께 전송됩니다.                 
+                  -->
+                 <form id='actionForm' action="/board/list" method='get'>
+                 	<input type ='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
+                 	<input type ='hidden' name='amount' value='${pageMaker.cri.amount}'>
+                 </form>
+                 <!-- 페이지 번호 출력 -->
+                 <div class ='pull-right'>
+                 	<ul class = 'pagination'>
+                 		<!-- 이전 버튼 -->
+                 		<c:if test="${pageMaker.prev}">
+                 			<li class="paginate_button previous">
+                 				<a href="${pageMaker.startPage-1}">Previous</a>
+                 			</li>
+                 		</c:if>
+                 		<!-- 번호 버튼 -->
+                 		<c:forEach var ="num" begin="${pageMaker.startPage}" end = "${pageMaker.endPage}">
+                 			<li class="paginate_button">
+                 				<a href="${num}">${num}</a>
+                 			</li>
+                 		</c:forEach>
+                 		<!-- 다음 버튼 -->
+                 		<c:if test ="${pageMaker.next}">
+                 			<li class="paginate_button next">
+                 				<a href="${pageMaker.endPage+1}">Next</a>
+                 			</li>
+                 		</c:if>
+                 	</ul>
+                 </div>
+                 <!-- end Pagination -->
                  <!-- Modal 추가 -->
                  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                  	<div class="modal-dialog">
@@ -95,6 +132,28 @@
 	 
 	 $("#regBtn").on("click",function(){
 		 self.location="/board/register";
+	 });
+	 
+	 // 페이지 번호 클릭 처리
+	 var actionForm =$("#actionForm");
+	 
+	 $(".paginate_button a").on("click",function(e){
+		 e.preventDefault(); // a 태그 클릭해도 페이지 이동 없도록
+		 console.log('페이지 번호 클릭 처리 click');
+		 // form 태그내 pageNum 값은 href 속성값으로 변경
+		 actionForm.find("input[name='pageNum']").val($(this).attr("href"));
+		 // 마지막 처리 submit
+		 actionForm.submit();
+	 });
+	 
+	 // 게시물 제목 클릭시 이동하는 이벤트
+	 $(".move").on("click",function(e){
+		 e.preventDefault();
+		 //  게시물의 제목을 클릭하면 form 태그에 추가로 bno값을 전송하기 위해서 input 태그를 만들어 추가
+		 actionForm.append("<input type='hidden' name='bno' value='"+ $(this).attr("href") +"'>");
+		 // form 태그의 action을 '/board/get'으로 변경
+		 actionForm.attr("action","/board/get"); // <-- 여기서 action이 변경됨(동적)
+		 actionForm.submit();
 	 });
  });
  </script>

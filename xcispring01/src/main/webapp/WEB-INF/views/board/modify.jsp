@@ -16,12 +16,16 @@
      <div class="col-lg-12">
          <div class="panel panel-default">
              <div class="panel-heading">
-                 Board Read Page
+                 Board Modify Page
              </div>
              <!-- /.panel-heading -->
              <div class="panel-body">
              	<!-- form-group : Bootstrap CSS 프레임워크에서 폼요소들을 그룹화 하고, 스타일을 적용하기 위해 사용하는 컨테이너(세로정렬이 기본,각필드간에 적절한 간격 자동 유지) -->
                 <form role="form" action="/board/modify" method="post"> 
+	               	<!-- 추가 -->
+               		<input type ='hidden' name='pageNum' value='<c:out value="${cri.pageNum}"/>'>
+               		<input type ='hidden' name='amount' value='<c:out value="${cri.amount}"/>'>	               	       
+	               	
 	               	<div class="form-group">
 	               		<label>Bno</label> 
 	               		<input class="form-control" name='bno' value='<c:out value="${board.bno}"/>' readonly="readonly">
@@ -73,11 +77,15 @@
 			formObj.attr("action","/board/remove")
 		}else if(operation === 'list'){
 			// move to list
-			//self.location ="/board/list";
-			//return;
-			//아무런 파라미터가 없기 때문에 <form> 태그의 모든 내용은 삭제한 상태에서 submit() 진행
 			formObj.attr("action","/board/list").attr("method","get");
+			// form 태그에서 필요한 부분만 잠시 복사(clone)해서 보관
+			var pageNumTag =$("input[name='pageNum']").clone();			
+			var amountTag =$("input[name='amount']").clone();
+			// form 태그내의 모든 내용은 지워버리고
 			formObj.empty();
+			// 다시 필요한 태그만 추가해서 /board/list를 호출하는 형태
+			formObj.append(pageNumTag);
+			formObj.append(amountTag);
 			
 		}
 		formObj.submit(); // 마지막에 직접 submit() 수행

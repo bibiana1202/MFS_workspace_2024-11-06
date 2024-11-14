@@ -7,6 +7,17 @@
 		SELECT * FROM tbl_board WHERE bno > 0
 		]]>
 	</select>
+
+	<!-- 페이징 처리 -->
+	<select id="getListWithPaging" resultType="net.developia.domain.BoardVO">
+		<![CDATA[
+		   select /*+INDEX_DESC(tbl_board pk_board) */
+		          rownum rn, bno, title, content, writer, regdate, updatedate
+		   from   tbl_board
+		   where  bno > 0
+		   offset ((#{pageNum}-1)*#{amount}) rows fetch first #{amount} rows only
+		]]>
+	</select>
 	
 	<insert id ="insert">
 		insert into tbl_board(bno,title,content,writer)
@@ -43,4 +54,8 @@
  		    where bno  = #{bno}
  	</update>
  	
+ 	<!-- 전체 데이터 개수 처리 -->
+ 	<select id ="getTotalCount" resultType="int">
+ 		select count(*) from tbl_board where bno >0
+ 	</select>
 </mapper>

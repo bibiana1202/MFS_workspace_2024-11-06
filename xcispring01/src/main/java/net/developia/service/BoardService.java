@@ -3,6 +3,7 @@ package net.developia.service;
 import java.util.List;
 
 import net.developia.domain.BoardVO;
+import net.developia.domain.Criteria;
 
 public interface BoardService {
 
@@ -14,5 +15,10 @@ public interface BoardService {
 	
 	public boolean remove (Long bno) throws Exception;
 	
-	public List<BoardVO> getList() throws Exception;
+//	public List<BoardVO> getList() throws Exception;
+
+	public List<BoardVO> getList(Criteria cri) throws Exception;
+	
+	// 전체 데이터 갯수 처리
+	public int getTotal(Criteria cri) throws Exception;
 }

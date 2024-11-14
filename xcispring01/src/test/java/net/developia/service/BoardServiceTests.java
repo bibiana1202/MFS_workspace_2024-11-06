@@ -1,6 +1,7 @@
 package net.developia.service;
 
 import static org.junit.Assert.assertNotNull;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,6 +12,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import lombok.extern.log4j.Log4j;
 import net.developia.domain.BoardVO;
+import net.developia.domain.Criteria;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -39,12 +41,14 @@ public class BoardServiceTests {
 		
 		log.info("생성된 게시물의 번호" + board.getBno());
 	}
-	
+	 
 	// 2.목록(리스트) 작업의 구현과 테스트
 	@Test
 	public void testGetList() throws Exception {
-		service.getList().forEach(board->log.info(board));
+//		service.getList().forEach(board->log.info(board));
+		service.getList(new Criteria(2,10)).forEach(board ->log.info(board));
 	}
+
 	
 	//3. 조회 작업의 구현과 테스트
 	public void testGet() throws Exception{
