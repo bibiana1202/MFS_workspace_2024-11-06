@@ -8,16 +8,61 @@
 		]]>
 	</select>
 
-	<!-- 페이징 처리 -->
+	<!-- 검색 및 페이징 처리, 검색 데이터 개수 처리 
+		MyBatis 는 원하는 속성을 찾을때 getTypeArr() 과 같은 이름에 기반을 두어서 검색하기 때문에
+		Criteria 에서 만들어둔 getTypeArr() 결과물의 배열이 <foreach> 의 대상이 된다.
+	-->
+	<sql id ="criteria">
+		<trim prefix ="("
+			  suffix =") AND"
+			  prefixOverrides ="OR"> <!-- trim 을 이용해서 맨 앞에서 생성되는 'OR'를 없애준다 -->
+			<foreach item ='type' collection ="typeArr">
+				<trim prefix ="OR">
+					<choose>
+						<when test="type == 'T'.toString()">
+							title like '%' || #{keyword} || '%'
+						</when>
+						<when test="type == 'C'.toString()">
+							content like '%' || #{keyword} || '%'
+						</when>
+						<when test="type == 'W'.toString()">
+							writer like '%' || #{keyword} || '%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+
 	<select id="getListWithPaging" resultType="net.developia.domain.BoardVO">
 		<![CDATA[
-		   select /*+INDEX_DESC(tbl_board pk_board) */
-		          rownum rn, bno, title, content, writer, regdate, updatedate
-		   from   tbl_board
-		   where  bno > 0
-		   offset ((#{pageNum}-1)*#{amount}) rows fetch first #{amount} rows only
+		   
+		   select bno,title,content,writer,regdate,updatedate
+		   from(
+		   		select /*+ INDEX_DESC(tbl_board pk_board) */
+		   			rownum rn, bno, title, content,writer,regdate,updatedate
+		   		from tbl_board
+		   		where 
+		]]>
+
+		<include refid ="criteria"/>
+
+		<![CDATA[
+				rownum <= #{pageNum} * #{amount}
+				)
+		   where rn > (#{pageNum}-1) * #{amount}
+			  
 		]]>
 	</select>
+	 
+	 <!-- 전체 데이터 개수 처리(sql,include 이용) -->
+	<select id ="getTotalCount" resultType="int">
+		select count(*) from tbl_board
+		where
+		<include refid="criteria"></include>
+		bno > 0
+	</select>
+	
 	
 	<insert id ="insert">
 		insert into tbl_board(bno,title,content,writer)
@@ -54,8 +99,5 @@
  		    where bno  = #{bno}
  	</update>
  	
- 	<!-- 전체 데이터 개수 처리 -->
- 	<select id ="getTotalCount" resultType="int">
- 		select count(*) from tbl_board where bno >0
- 	</select>
+
 </mapper>

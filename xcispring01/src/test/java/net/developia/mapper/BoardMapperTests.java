@@ -101,4 +101,20 @@ public class BoardMapperTests {
 		List<BoardVO> list = mapper.getListWithPaging(cri);
 		list.forEach(board -> log.info(board.getBno()));
 	}
+	
+	// 검색 처리
+	// Criteria 객체의 type과 keyword를 넣어서 원하는 SQL이 생성되는지 확인하기 위함
+	@Test
+	public void testSearch() {
+		Criteria cri = new Criteria();
+		cri.setKeyword("새로");
+		cri.setType("TC");
+		// 20개씩 3페이지
+		cri.setPageNum(3);
+		cri.setAmount(20);
+		
+		List<BoardVO> list = mapper.getListWithPaging(cri);
+		
+		list.forEach(board -> log.info(board));
+	}
 }

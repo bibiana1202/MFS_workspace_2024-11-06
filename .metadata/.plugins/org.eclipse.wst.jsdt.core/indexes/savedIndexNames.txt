@@ -1,8 +1,4 @@
 INDEX VERSION 1.4+C:\dev\MFS_workspace_2024-11-06\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+259673092.index
 3369303594.index
-1377025285.index
-18969055.index
-131562126.index
-2838137992.index
-1601614578.index
-1126333169.index
+1373253520.index

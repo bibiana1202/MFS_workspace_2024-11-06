@@ -25,6 +25,8 @@
 	               	<!-- 추가 -->
                		<input type ='hidden' name='pageNum' value='<c:out value="${cri.pageNum}"/>'>
                		<input type ='hidden' name='amount' value='<c:out value="${cri.amount}"/>'>	               	       
+               		<input type ='hidden' name='type' value='<c:out value="${cri.type}"/>'>	               	       
+               		<input type ='hidden' name='keyword' value='<c:out value="${cri.keyword}"/>'>	               	       
 	               	
 	               	<div class="form-group">
 	               		<label>Bno</label> 
@@ -66,11 +68,11 @@
  <!-- /.row -->
   <script type ="text/javascript">
  $(document).ready(function(){ //dom 구조가 만들어져 준비되어진 상태 -> ready -> call back function
-	 var formObj = $("form");  // jQuery 선택자를 사용하여 HTML 페이지에서 <form> 요소를 선택하고, 이를 변수에 할당
+	 let formObj = $("form");  // jQuery 선택자를 사용하여 HTML 페이지에서 <form> 요소를 선택하고, 이를 변수에 할당
  	
 	$('button').on("click",function(e){
 		e.preventDefault(); // 기본 동작을 막기(폼제출방지,페이지이동방지,기타기본동작방지)
-		var operation = $(this).data("oper"); // javascript 에서는 <button>태그의 'data-oper' 속성을 이용해서 원하는 기능을 동작하도록 처리
+		let operation = $(this).data("oper"); // javascript 에서는 <button>태그의 'data-oper' 속성을 이용해서 원하는 기능을 동작하도록 처리
 		console.log(operation);
 		
 		if(operation === 'remove'){
@@ -79,13 +81,17 @@
 			// move to list
 			formObj.attr("action","/board/list").attr("method","get");
 			// form 태그에서 필요한 부분만 잠시 복사(clone)해서 보관
-			var pageNumTag =$("input[name='pageNum']").clone();			
-			var amountTag =$("input[name='amount']").clone();
+			let pageNumTag =$("input[name='pageNum']").clone();			
+			let amountTag =$("input[name='amount']").clone();
+			let keywordTag =$("input[name='keyword']").clone();
+			let typeTag =$("input[name='type']").clone();
 			// form 태그내의 모든 내용은 지워버리고
 			formObj.empty();
 			// 다시 필요한 태그만 추가해서 /board/list를 호출하는 형태
 			formObj.append(pageNumTag);
 			formObj.append(amountTag);
+			formObj.append(keywordTag);
+			formObj.append(typeTag);
 			
 		}
 		formObj.submit(); // 마지막에 직접 submit() 수행
