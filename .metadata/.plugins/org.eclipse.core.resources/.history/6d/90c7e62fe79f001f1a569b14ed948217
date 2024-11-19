@@ -1,6 +1,0 @@
-package net.developia.service;
-
-public interface BoardService {
-
-	public void register(Boar)
-}
